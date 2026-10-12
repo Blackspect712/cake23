@@ -58,3 +58,10 @@ html, body {
   display: block;
 }
 
+/* Hero Title Overlay */
+#hero-title-overlay {
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+

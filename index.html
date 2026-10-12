@@ -81,10 +81,27 @@
 </head>
 <body class="bg-background-light dark:bg-background-dark text-cocoa-800 dark:text-cream-100 font-sans antialiased transition-colors duration-500 overflow-x-clip selection:bg-primary selection:text-white">
 
-  <!-- SCROLL ANIMATION SECTION (PURE ANIMATION, NO TITLE BAR, NO CONTROLS) -->
+  <!-- SCROLL ANIMATION SECTION (WITH FADING TITLE OVERLAY) -->
   <section id="scroll-animation-section" class="scroll-animation-wrapper">
     <div class="sticky-canvas-container">
       <canvas id="cake-canvas"></canvas>
+
+      <!-- Fading Hero Title Overlay (Fades out at 30% scroll progress) -->
+      <div id="hero-title-overlay" class="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-4 pointer-events-none transition-all duration-100 ease-out">
+        <div class="max-w-4xl mx-auto space-y-3 sm:space-y-4">
+          <h1 class="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[0.18em] sm:tracking-[0.22em] uppercase text-cream-50 drop-shadow-[0_6px_30px_rgba(0,0,0,0.9)] leading-tight">
+            AMMA CAKES AND SWEETS
+          </h1>
+          <div class="flex items-center justify-center gap-3 my-1">
+            <span class="w-8 sm:w-14 h-[1px] bg-primary/60"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            <span class="w-8 sm:w-14 h-[1px] bg-primary/60"></span>
+          </div>
+          <p class="font-cinzel text-xs sm:text-sm md:text-base tracking-[0.35em] sm:tracking-[0.45em] uppercase text-primary font-semibold drop-shadow-[0_2px_15px_rgba(0,0,0,0.9)]">
+            THE TASE TO HOMIEE
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -118,6 +118,17 @@ function init() {
     // rect.top starts at 0 and goes down to -maxScroll
     const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
     targetFrame = 1 + progress * (TOTAL_FRAMES - 1);
+
+    // Fade out headline & subheadline by 30% of the scroll animation section
+    const heroOverlay = document.getElementById('hero-title-overlay');
+    if (heroOverlay) {
+      const fadeLimit = 0.30;
+      const fadeProgress = Math.min(Math.max(progress / fadeLimit, 0), 1);
+      const opacity = 1 - fadeProgress;
+      heroOverlay.style.opacity = opacity.toFixed(3);
+      heroOverlay.style.transform = `translateY(${-fadeProgress * 40}px)`;
+      heroOverlay.style.visibility = opacity <= 0.005 ? 'hidden' : 'visible';
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
