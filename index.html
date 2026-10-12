@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>L'Opéra Noir Triple Ganache | Maison du Cacao</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#C58A45",
+            "primary-dark": "#9A662C",
+            "primary-light": "#DFC29C",
+            "background-light": "#FBF8F3",
+            "background-dark": "#160C08",
+            "cocoa-900": "#21110B",
+            "cocoa-800": "#2F1910",
+            "cocoa-700": "#412419",
+            "cocoa-600": "#5A3323",
+            "cream-50": "#FDFBF7",
+            "cream-100": "#F6F1E7",
+            "cream-200": "#EFE6D6",
+            "gold-accent": "#D4A373",
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            serifAlt: ['"Cinzel"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          borderRadius: {
+            DEFAULT: "0.75rem",
+          },
+          boxShadow: {
+            'luxury': '0 20px 45px -15px rgba(33, 17, 11, 0.15)',
+            'luxury-dark': '0 25px 50px -15px rgba(0, 0, 0, 0.65)',
+            'gold-glow': '0 0 35px -5px rgba(197, 138, 69, 0.35)',
+          }
+        },
+      },
+    };
+  </script>
+  <style>
+    .font-serif-luxury {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.2;
+      }
+      50% {
+        transform: translateY(-25px) rotate(180deg);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(0px) rotate(360deg);
+        opacity: 0.2;
+      }
+    }
+    .floating-flake-1 { animation: floatParticle 8s infinite ease-in-out; }
+    .floating-flake-2 { animation: floatParticle 11s infinite ease-in-out reverse; }
+    .floating-flake-3 { animation: floatParticle 9.5s infinite ease-in-out 1.5s; }
+    .floating-flake-4 { animation: floatParticle 13s infinite ease-in-out 0.8s; }
+    .radial-cocoa-light {
+      background: radial-gradient(circle at 50% 50%, rgba(212, 163, 115, 0.22) 0%, rgba(251, 248, 243, 0) 70%);
+    }
+    .radial-cocoa-dark {
+      background: radial-gradient(circle at 50% 50%, rgba(197, 138, 69, 0.2) 0%, rgba(22, 12, 8, 0) 75%);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-cocoa-800 dark:text-cream-100 font-sans antialiased transition-colors duration-500 overflow-x-clip selection:bg-primary selection:text-white">
+
+  <!-- SCROLL ANIMATION SECTION (PURE ANIMATION, NO TITLE BAR, NO CONTROLS) -->
+  <section id="scroll-animation-section" class="scroll-animation-wrapper">
+    <div class="sticky-canvas-container">
+      <canvas id="cake-canvas"></canvas>
+    </div>
+  </section>
+
+  <!-- MAIN SECTIONS BELOW SCROLL ANIMATION (FROM CODE.HTML) -->
+  <main class="relative z-30 bg-background-light dark:bg-background-dark">
+    <!-- Stat summary bar -->
+    <div class="border-y border-[#EFE5D8] dark:border-cocoa-800 bg-[#F4EDE2]/80 dark:bg-cocoa-900/90 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="space-y-1">
+          <span class="font-cinzel text-lg md:text-2xl font-bold text-primary block">100%</span>
+          <span class="text-xs uppercase tracking-wider text-cocoa-700 dark:text-cream-200">AOP Normandy Butter</span>
+        </div>
+        <div class="space-y-1">
+          <span class="font-cinzel text-lg md:text-2xl font-bold text-primary block">70% Grand Cru</span>
+          <span class="text-xs uppercase tracking-wider text-cocoa-700 dark:text-cream-200">Valrhona Dark Chocolate</span>
+        </div>
+        <div class="space-y-1">
+          <span class="font-cinzel text-lg md:text-2xl font-bold text-primary block">48 Hours</span>
+          <span class="text-xs uppercase tracking-wider text-cocoa-700 dark:text-cream-200">Maturation &amp; Layering</span>
+        </div>
+        <div class="space-y-1">
+          <span class="font-cinzel text-lg md:text-2xl font-bold text-primary block">Zero Preservatives</span>
+          <span class="text-xs uppercase tracking-wider text-cocoa-700 dark:text-cream-200">All-Natural Artisan Process</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="py-20 bg-cream-100/60 dark:bg-cocoa-900/60 border-t border-[#EAE0D1] dark:border-cocoa-800 relative" id="about">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-16">
+          <span class="text-xs font-cinzel uppercase tracking-[0.25em] text-primary font-semibold block mb-2">The Architecture of Taste</span>
+          <h2 class="font-serif-luxury text-3xl sm:text-5xl font-bold text-cocoa-900 dark:text-cream-50 leading-tight">
+            Engineered for pure tactile &amp; aromatic indulgence.
+          </h2>
+          <p class="mt-4 text-base text-cocoa-700 dark:text-cream-200 leading-relaxed">
+            Every slice of L'Opéra Noir is structured according to precise pastry physics: balancing the bitter density of dark cocoa crumb with the light, melting sensation of whipped ganache mousse.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-cream-50 dark:bg-cocoa-800/90 rounded-xl p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm relative group hover:border-primary/60 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-cinzel text-xs text-primary font-bold tracking-widest uppercase">Layer 01 • The Crown</span>
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">diamond</span>
+            </div>
+            <h3 class="font-serif-luxury text-xl font-bold text-cocoa-900 dark:text-cream-50 mb-3">Miroir Noir Glaze &amp; Tablet</h3>
+            <p class="text-sm text-cocoa-700 dark:text-cream-200 leading-relaxed mb-4">
+              A high-gloss mirror glaze poured at precisely 32°C, topped with a rosette of whipped cocoa buttercream and a snap-tempered dark chocolate tablet.
+            </p>
+            <div class="pt-4 border-t border-stone-200 dark:border-cocoa-700 text-xs font-medium text-primary">
+              Notes: Crisp initial snap, bittersweet gloss, cacao nib crunch
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-800/90 rounded-xl p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm relative group hover:border-primary/60 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-cinzel text-xs text-primary font-bold tracking-widest uppercase">Layer 02 • The Body</span>
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">grain</span>
+            </div>
+            <h3 class="font-serif-luxury text-xl font-bold text-cocoa-900 dark:text-cream-50 mb-3">Whipped Guanaja Ganache</h3>
+            <p class="text-sm text-cocoa-700 dark:text-cream-200 leading-relaxed mb-4">
+              Two central strata of aerated 70% dark chocolate mousse emulsified with cultured Normandy cream, delivering a silky melt-in-your-mouth sensation.
+            </p>
+            <div class="pt-4 border-t border-stone-200 dark:border-cocoa-700 text-xs font-medium text-primary">
+              Notes: Creamy density, floral vanilla warmth, rounded acidity
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-800/90 rounded-xl p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm relative group hover:border-primary/60 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-cinzel text-xs text-primary font-bold tracking-widest uppercase">Layer 03 • The Foundation</span>
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">water_drop</span>
+            </div>
+            <h3 class="font-serif-luxury text-xl font-bold text-cocoa-900 dark:text-cream-50 mb-3">Dark Cocoa Génoise</h3>
+            <p class="text-sm text-cocoa-700 dark:text-cream-200 leading-relaxed mb-4">
+              Three tiers of slow-baked sponge enriched with Dutch alkalized cocoa powder and brushed with Madagascar planifolia bourbon vanilla syrup.
+            </p>
+            <div class="pt-4 border-t border-stone-200 dark:border-cocoa-700 text-xs font-medium text-primary">
+              Notes: Moist airy crumb, deep roasted cacao tones, lingering finish
+            </div>
+          </div>
+        </div>
+        <div class="mt-16 bg-cream-50 dark:bg-cocoa-800 rounded-2xl p-8 md:p-12 border border-[#EAE0D1] dark:border-cocoa-700 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+          <div class="w-20 h-20 rounded-full border-2 border-primary/40 flex items-center justify-center shrink-0 bg-primary/10">
+            <span class="material-symbols-outlined text-4xl text-primary">restaurant</span>
+          </div>
+          <div class="space-y-3 flex-1 text-center md:text-left">
+            <p class="font-serif-luxury italic text-lg sm:text-xl text-cocoa-900 dark:text-cream-50 leading-relaxed">
+              "L'Opéra Noir is not simply dessert; it is an exploration of cocoa terroir. We calibrate each ganache layer to ensure the bitterness of the Guanaja chocolate reveals itself in harmonic sequence without being overpowered by sweetness."
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2">
+              <div>
+                <span class="font-cinzel text-sm font-bold text-cocoa-900 dark:text-cream-100 uppercase tracking-widest block">Laurent Mercier</span>
+                <span class="text-xs text-primary font-medium tracking-wide">Chef Pâtissier &amp; Compagnon du Tour de France</span>
+              </div>
+              <div class="font-serif-luxury italic text-cocoa-400 dark:text-cream-200/50 text-xl tracking-wider select-none">
+                Laurent M.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ingredients Section -->
+    <section class="py-20 border-t border-[#EAE0D1] dark:border-cocoa-800 relative" id="ingredients">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs font-cinzel uppercase tracking-[0.25em] text-primary font-semibold block mb-2">Purity of Origin</span>
+          <h2 class="font-serif-luxury text-3xl sm:text-5xl font-bold text-cocoa-900 dark:text-cream-50">
+            Sourced with Uncompromising Rigor
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-cocoa-700 dark:text-cream-200">
+            We reject emulsifiers, artificial flavorings, and palm oil. Every element is selected from certified Grand Cru smallholders and historic French dairies.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-cream-50 dark:bg-cocoa-900 rounded-xl p-6 border border-[#E9DFC0] dark:border-cocoa-700 hover:border-primary transition-all shadow-sm">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-5">
+              <span class="material-symbols-outlined">eco</span>
+            </div>
+            <span class="text-[11px] font-mono tracking-widest text-primary uppercase font-bold block mb-1">South America</span>
+            <h3 class="font-serif-luxury text-lg font-bold text-cocoa-900 dark:text-cream-50 mb-2">70% Guanaja Cacao</h3>
+            <p class="text-xs text-cocoa-700 dark:text-cream-200 leading-relaxed">
+              Rare blend of Criollo and Trinitario beans providing notes of warm spice and a refined bitter palate with zero astringency.
+            </p>
+            <div class="mt-4 pt-3 border-t border-stone-200 dark:border-cocoa-800 text-[11px] text-cocoa-600 dark:text-cream-200 flex items-center justify-between">
+              <span>Fair Trade Certified</span>
+              <span class="font-semibold text-primary">Single Batch</span>
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-900 rounded-xl p-6 border border-[#E9DFC0] dark:border-cocoa-700 hover:border-primary transition-all shadow-sm">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-5">
+              <span class="material-symbols-outlined">spa</span>
+            </div>
+            <span class="text-[11px] font-mono tracking-widest text-primary uppercase font-bold block mb-1">Sambava, Madagascar</span>
+            <h3 class="font-serif-luxury text-lg font-bold text-cocoa-900 dark:text-cream-50 mb-2">Bourbon Planifolia Pods</h3>
+            <p class="text-xs text-cocoa-700 dark:text-cream-200 leading-relaxed">
+              Sun-cured grade A black pods split by hand into our génoise sponge reduction, enhancing natural cocoa perfumes.
+            </p>
+            <div class="mt-4 pt-3 border-t border-stone-200 dark:border-cocoa-800 text-[11px] text-cocoa-600 dark:text-cream-200 flex items-center justify-between">
+              <span>Grade A Botanical</span>
+              <span class="font-semibold text-primary">Direct Farm</span>
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-900 rounded-xl p-6 border border-[#E9DFC0] dark:border-cocoa-700 hover:border-primary transition-all shadow-sm">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-5">
+              <span class="material-symbols-outlined">cookie</span>
+            </div>
+            <span class="text-[11px] font-mono tracking-widest text-primary uppercase font-bold block mb-1">Poitou-Charentes, France</span>
+            <h3 class="font-serif-luxury text-lg font-bold text-cocoa-900 dark:text-cream-50 mb-2">AOP Churn Butter (84%)</h3>
+            <p class="text-xs text-cocoa-700 dark:text-cream-200 leading-relaxed">
+              Slow-churned cultured farm cream offering exceptional plastic texture and delicate hazelnut aromatics in our ganache.
+            </p>
+            <div class="mt-4 pt-3 border-t border-stone-200 dark:border-cocoa-800 text-[11px] text-cocoa-600 dark:text-cream-200 flex items-center justify-between">
+              <span>Protected Origin</span>
+              <span class="font-semibold text-primary">84% Fat</span>
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-900 rounded-xl p-6 border border-[#E9DFC0] dark:border-cocoa-700 hover:border-primary transition-all shadow-sm">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-5">
+              <span class="material-symbols-outlined">hive</span>
+            </div>
+            <span class="text-[11px] font-mono tracking-widest text-primary uppercase font-bold block mb-1">Provence Foothills</span>
+            <h3 class="font-serif-luxury text-lg font-bold text-cocoa-900 dark:text-cream-50 mb-2">Raw Wild Honey &amp; Cane</h3>
+            <p class="text-xs text-cocoa-700 dark:text-cream-200 leading-relaxed">
+              Unrefined raw wildflower honey for a balanced glycemic profile and unbleached cane sugar to highlight the cacao bean's natural acidity.
+            </p>
+            <div class="mt-4 pt-3 border-t border-stone-200 dark:border-cocoa-800 text-[11px] text-cocoa-600 dark:text-cream-200 flex items-center justify-between">
+              <span>Unrefined Organic</span>
+              <span class="font-semibold text-primary">Wild Harvest</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nutrition Section -->
+    <section class="py-20 bg-cream-100/60 dark:bg-cocoa-900/60 border-t border-[#EAE0D1] dark:border-cocoa-800" id="nutrition">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-5 space-y-6">
+            <span class="text-xs font-cinzel uppercase tracking-[0.25em] text-primary font-semibold block">Sensory &amp; Diet Clarity</span>
+            <h2 class="font-serif-luxury text-3xl sm:text-4xl font-bold text-cocoa-900 dark:text-cream-50 leading-tight">
+              Absolute Nutritional Transparency
+            </h2>
+            <p class="text-sm text-cocoa-700 dark:text-cream-200 leading-relaxed">
+              Craft pastry should never compromise on integrity. Here is the verified breakdown for one generous artisan slice (145 grams).
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-medium">Vegetarian Friendly</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-cream-200 dark:bg-cocoa-800 text-cocoa-900 dark:text-cream-100 font-medium">100% Palm-Oil Free</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-cream-200 dark:bg-cocoa-800 text-cocoa-900 dark:text-cream-100 font-medium">Alcohol Free</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-cream-200 dark:bg-cocoa-800 text-cocoa-900 dark:text-cream-100 font-medium">No Synthetic Emulsifiers</span>
+            </div>
+            <div class="p-5 rounded-xl border border-amber-300/40 bg-amber-50/60 dark:bg-cocoa-800/80 text-xs leading-relaxed text-cocoa-800 dark:text-cream-100 space-y-2">
+              <div class="flex items-center gap-2 font-semibold text-cocoa-900 dark:text-cream-50">
+                <span class="material-symbols-outlined text-sm text-primary">info</span>
+                <span>Allergen Notice</span>
+              </div>
+              <p>
+                Contains: <strong>Dairy (Milk &amp; Normandy Butter), Eggs, Wheat (Gluten)</strong>. Crafted in a dedicated workshop handling hazelnuts and almonds. <em>A gluten-free almond flour variation is available on 48h advance reservation.</em>
+              </p>
+            </div>
+          </div>
+          <div class="lg:col-span-7">
+            <div class="bg-cream-50 dark:bg-cocoa-900 rounded-2xl p-6 sm:p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-luxury">
+              <div class="flex items-center justify-between pb-6 border-b border-[#EAE0D1] dark:border-cocoa-800">
+                <div>
+                  <h3 class="font-serif-luxury text-xl font-bold text-cocoa-900 dark:text-cream-50">Nutritional Profile</h3>
+                  <span class="text-xs text-cocoa-600 dark:text-cream-200">Per Portion: 1 Slice (145g)</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-2xl font-bold font-serif-luxury text-primary">480</span>
+                  <span class="text-xs uppercase tracking-wider block text-cocoa-600 dark:text-cream-200">Kilocalories</span>
+                </div>
+              </div>
+              <div class="divide-y divide-[#EFE5D8] dark:divide-cocoa-800 text-sm">
+                <div class="py-3.5 flex justify-between items-center">
+                  <span class="text-cocoa-700 dark:text-cream-200 font-medium">Cocoa Polyphenols (Antioxidants)</span>
+                  <span class="font-bold text-cocoa-900 dark:text-cream-50">650 mg <span class="text-xs text-primary font-normal">(High)</span></span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center">
+                  <span class="text-cocoa-700 dark:text-cream-200 font-medium">Total Lipids &amp; Healthy Fats</span>
+                  <span class="font-bold text-cocoa-900 dark:text-cream-50">26 g</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center pl-4 text-xs">
+                  <span class="text-cocoa-600 dark:text-cream-200">— Of which Saturated Fatty Acids (Normandy Butter &amp; Cocoa Butter)</span>
+                  <span class="font-semibold text-cocoa-800 dark:text-cream-100">18 g</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center">
+                  <span class="text-cocoa-700 dark:text-cream-200 font-medium">Carbohydrates</span>
+                  <span class="font-bold text-cocoa-900 dark:text-cream-50">42 g</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center pl-4 text-xs">
+                  <span class="text-cocoa-600 dark:text-cream-200">— Naturally derived Sugars</span>
+                  <span class="font-semibold text-cocoa-800 dark:text-cream-100">24 g</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center">
+                  <span class="text-cocoa-700 dark:text-cream-200 font-medium">Dietary Fiber (Pure Cacao Seed)</span>
+                  <span class="font-bold text-cocoa-900 dark:text-cream-50">5.2 g</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center">
+                  <span class="text-cocoa-700 dark:text-cream-200 font-medium">Protein (Pasture-Raised Eggs)</span>
+                  <span class="font-bold text-cocoa-900 dark:text-cream-50">7.4 g</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center">
+                  <span class="text-cocoa-700 dark:text-cream-200 font-medium">Sodium (Guérande Sea Salt)</span>
+                  <span class="font-bold text-cocoa-900 dark:text-cream-50">0.18 g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 border-t border-[#EAE0D1] dark:border-cocoa-800" id="gallery">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs font-cinzel uppercase tracking-[0.25em] text-primary font-semibold block mb-2">Visual Immersion</span>
+          <h2 class="font-serif-luxury text-3xl sm:text-5xl font-bold text-cocoa-900 dark:text-cream-50">
+            A Feast for Every Sense
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-cocoa-700 dark:text-cream-200">
+            From the mirror-glaze pouring to the moment the cake box ribbon is undone at your salon table.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="group relative rounded-xl overflow-hidden border border-[#E9DFC0] dark:border-cocoa-700 bg-black/5 aspect-[4/5] flex flex-col justify-end">
+            <img alt="Slice of chocolate cake on a white plate" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB34tzJqrQm9OTTNmlo8dHbj95rzPxaectSVGi7MFCdFQLTMa-IEJNRnIyuovJrhdiPGmFoMGykQYuAvNwY0epLYY9FJeQ-R6yWPJGZjT2qrpsarvQR001Stgnj1Yy52knqoSclljuM1W4Q5xZmVTVTVwE3lBbhT99cVtBWIyj9x7xsbsPkqPX59b_G4Ri3J155ZuQEavmmEerPUK3bwob0pgvzktB2IgdjBYLo7G4w"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-cocoa-900/90 via-cocoa-900/20 to-transparent"></div>
+            <div class="relative z-10 p-5 text-white">
+              <span class="text-[10px] font-cinzel tracking-widest uppercase text-primary font-bold">Plate Presentation</span>
+              <h3 class="font-serif-luxury text-base font-bold">The Signature Geometry</h3>
+              <p class="text-xs text-cream-200/80 mt-1">Sharp crumb cut showcasing clean ganache tiers.</p>
+            </div>
+          </div>
+          <div class="group relative rounded-xl overflow-hidden border border-[#E9DFC0] dark:border-cocoa-700 bg-black/5 aspect-[4/5] flex flex-col justify-end">
+            <img alt="Artisanal kitchen craft and glaze pouring" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4oQQzE-jxBPVolpRMkeTHrjzplFLskzPCzDi6odWnOd-_gooC8kKI_JiRUMvxP7-GqTcVWcDq3TBTao62NdYda8VXGnVONFIMfzgmH88c7bmEPEk3amJdhug8R_cl7c2ZrpPM-BwoxBzq7KJFBAVtuhuIsJJNc68XRv3cfXX0L2mnRodHv3ZfXJXw6ffwNedc16qLf0ogzIa3Vm-bqVACepeM2nbdOIKLqc9Q9UcJ"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-cocoa-900/90 via-cocoa-900/20 to-transparent"></div>
+            <div class="relative z-10 p-5 text-white">
+              <span class="text-[10px] font-cinzel tracking-widest uppercase text-primary font-bold">The Atelier Process</span>
+              <h3 class="font-serif-luxury text-base font-bold">Miroir Tempered Sheen</h3>
+              <p class="text-xs text-cream-200/80 mt-1">Poured in steady spirals over chilled genoise.</p>
+            </div>
+          </div>
+          <div class="group relative rounded-xl overflow-hidden border border-[#E9DFC0] dark:border-cocoa-700 bg-black/5 aspect-[4/5] flex flex-col justify-end">
+            <img alt="Pure single-origin chocolate ingredients" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCngrGe4dzO-aWKtm4c0AWHTluFvXFQ8m1ZaL7Hqz8Ew3c2CjUvNoRtAy_CQYX72OxtC5ZRrPRmMrP-_ygcPNZTUPj3sykERU94RNiXf_Er8MSGlxdAmIfg9Oxkij-tEcLVgYbzwZjOQtL5C4EKt2DTAQI4kjuLVZf_ZbaIzFa9_w3EUTK7RoZOS60JfRLvDD9Kpm-erw2Hb8RxDvZLco9sK-lRy7rb8U3AUKX-Ep3L"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-cocoa-900/90 via-cocoa-900/20 to-transparent"></div>
+            <div class="relative z-10 p-5 text-white">
+              <span class="text-[10px] font-cinzel tracking-widest uppercase text-primary font-bold">The Harvest</span>
+              <h3 class="font-serif-luxury text-base font-bold">Pure Origin Cocoa</h3>
+              <p class="text-xs text-cream-200/80 mt-1">Roasted bean butter and Grand Cru chocolate discs.</p>
+            </div>
+          </div>
+          <div class="group relative rounded-xl overflow-hidden border border-[#E9DFC0] dark:border-cocoa-700 bg-black/5 aspect-[4/5] flex flex-col justify-end">
+            <img alt="Luxury gift packaging with gold foil box" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN7P6gzmdv4Ja74_SxTf795L51_iB7CbwUpp8vGWWMFJJr-EpjFTyNMlYuNNeij99waMq109GOvYrV05-5AimS4rhyOyc2HLdmggyN2A3idT1qt9SboSPaV3ncwCHZynouRi0u90Ej9H4A5DUj59DgMtikIf2y73ujg_K0i2mKmaesy_wfytUFZzM-b4XXHr1yFuHdX1xxtfUr0J8nrk3y9dXxreZyaiag82B5pvGl"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-cocoa-900/90 via-cocoa-900/20 to-transparent"></div>
+            <div class="relative z-10 p-5 text-white">
+              <span class="text-[10px] font-cinzel tracking-widest uppercase text-primary font-bold">Unboxing</span>
+              <h3 class="font-serif-luxury text-base font-bold">Gold Foil &amp; Silk Box</h3>
+              <p class="text-xs text-cream-200/80 mt-1">Delivered insulated with cold core preservation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-20 bg-cream-100/60 dark:bg-cocoa-900/60 border-t border-[#EAE0D1] dark:border-cocoa-800" id="reviews">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <span class="text-xs font-cinzel uppercase tracking-[0.25em] text-primary font-semibold block mb-2">Critiques &amp; Praise</span>
+            <h2 class="font-serif-luxury text-3xl sm:text-5xl font-bold text-cocoa-900 dark:text-cream-50">
+              Celebrated by Connoisseurs
+            </h2>
+          </div>
+          <div class="flex items-center gap-4 bg-cream-50 dark:bg-cocoa-800 px-6 py-3.5 rounded-xl border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm">
+            <div class="text-3xl font-serif-luxury font-bold text-primary">4.97</div>
+            <div class="text-xs">
+              <div class="flex text-amber-500 mb-0.5">
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+              </div>
+              <span class="text-cocoa-700 dark:text-cream-200">Across 842 verified Parisian buyers (99.4% recommend)</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-cream-50 dark:bg-cocoa-800 rounded-2xl p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex text-amber-500">
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+              </div>
+              <p class="font-serif-luxury italic text-base text-cocoa-900 dark:text-cream-50 leading-relaxed">
+                "The balance between bitter 70% dark chocolate and silky ganache is simply transcendent. It reminds you of why classical French pastry is an art form."
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-stone-200 dark:border-cocoa-700 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-xs uppercase tracking-wider block text-cocoa-900 dark:text-cream-50">Hélène Darroze</span>
+                <span class="text-[11px] text-cocoa-600 dark:text-cream-200">Culinary Columnist, Le Figaro</span>
+              </div>
+              <span class="text-xs text-primary font-medium">Paris, 7e</span>
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-800 rounded-2xl p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex text-amber-500">
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+              </div>
+              <p class="font-serif-luxury italic text-base text-cocoa-900 dark:text-cream-50 leading-relaxed">
+                "Ordered for our anniversary dinner in Mayfair. Arrived chilled in immaculate packaging. The crumb texture is extraordinary—delicate, moist, never heavy."
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-stone-200 dark:border-cocoa-700 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-xs uppercase tracking-wider block text-cocoa-900 dark:text-cream-50">Julian Vance</span>
+                <span class="text-[11px] text-cocoa-600 dark:text-cream-200">Private Collector</span>
+              </div>
+              <span class="text-xs text-primary font-medium">London, UK</span>
+            </div>
+          </div>
+          <div class="bg-cream-50 dark:bg-cocoa-800 rounded-2xl p-8 border border-[#E9DFC0] dark:border-cocoa-700 shadow-sm flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex text-amber-500">
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+                <span class="material-symbols-outlined text-sm text-primary">star</span>
+              </div>
+              <p class="font-serif-luxury italic text-base text-cocoa-900 dark:text-cream-50 leading-relaxed">
+                "You can taste the purity of the cocoa from the very first bite. The mirror glaze snap is perfection, and the chocolate tablet on top is pure artisan temper."
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-stone-200 dark:border-cocoa-700 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-xs uppercase tracking-wider block text-cocoa-900 dark:text-cream-50">Camille Lefebvre</span>
+                <span class="text-[11px] text-cocoa-600 dark:text-cream-200">Verified Atelier Patron</span>
+              </div>
+              <span class="text-xs text-primary font-medium">Paris, 16e</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reserve Section (Order Form) -->
+    <section class="py-20 border-t border-[#EAE0D1] dark:border-cocoa-800 relative" id="reserve">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="text-xs font-cinzel uppercase tracking-[0.25em] text-primary font-semibold block mb-2">Handmade to Order</span>
+          <h2 class="font-serif-luxury text-3xl sm:text-5xl font-bold text-cocoa-900 dark:text-cream-50">
+            Reserve Your Fresh Daily Batch
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-cocoa-700 dark:text-cream-200">
+            Our master pâtissiers craft 45 cakes every morning. Select your format, personalization plaque, and courier timing below.
+          </p>
+        </div>
+        <div class="max-w-4xl mx-auto bg-cream-50 dark:bg-cocoa-900 rounded-3xl border border-[#E9DFC0] dark:border-cocoa-700 p-6 sm:p-10 shadow-2xl">
+          <form class="space-y-8" id="orderForm" onsubmit="event.preventDefault(); alert('Merci! Your reservation for L\'Opéra Noir has been placed into our atelier schedule.');">
+            <div>
+              <label class="block text-xs font-cinzel uppercase tracking-widest text-primary font-bold mb-4">
+                1. Select Format &amp; Portioning
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <label class="relative flex flex-col p-4 rounded-xl border-2 border-stone-200 dark:border-cocoa-700 cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                  <input class="sr-only" name="cake_size" onchange="updateSummary(14.50, 'Artisan Individual Slice')" type="radio" value="slice"/>
+                  <span class="text-xs font-bold uppercase tracking-wider text-cocoa-900 dark:text-cream-50 mb-1">Single Slice</span>
+                  <span class="text-xs text-cocoa-600 dark:text-cream-200 mb-3">1 Portion (145g)</span>
+                  <span class="text-lg font-serif-luxury font-bold text-primary mt-auto">$14.50</span>
+                </label>
+                <label class="relative flex flex-col p-4 rounded-xl border-2 border-stone-200 dark:border-cocoa-700 cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                  <input class="sr-only" name="cake_size" onchange="updateSummary(52.00, '6-inch Petite Celebration Cake')" type="radio" value="petite"/>
+                  <span class="text-xs font-bold uppercase tracking-wider text-cocoa-900 dark:text-cream-50 mb-1">6" Petite</span>
+                  <span class="text-xs text-cocoa-600 dark:text-cream-200 mb-3">4 - 6 Slices</span>
+                  <span class="text-lg font-serif-luxury font-bold text-primary mt-auto">$52.00</span>
+                </label>
+                <label class="relative flex flex-col p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                  <span class="absolute -top-2.5 right-3 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Signature Value</span>
+                  <input checked="" class="sr-only" name="cake_size" onchange="updateSummary(78.00, '8-inch Grand Feast Cake (8-10 slices)')" type="radio" value="grand"/>
+                  <span class="text-xs font-bold uppercase tracking-wider text-cocoa-900 dark:text-cream-50 mb-1">8" Grand Feast</span>
+                  <span class="text-xs text-cocoa-600 dark:text-cream-200 mb-3">8 - 10 Slices (Whole Cake)</span>
+                  <span class="text-lg font-serif-luxury font-bold text-primary mt-auto">$78.00</span>
+                </label>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#EAE0D1] dark:border-cocoa-800">
+              <div>
+                <label class="block text-xs font-cinzel uppercase tracking-widest text-primary font-bold mb-2" for="plaqueText">
+                  2. Custom Gold Leaf Plaque (Optional)
+                </label>
+                <input class="w-full text-sm rounded border-[#DCCEC0] dark:border-cocoa-700 bg-white dark:bg-cocoa-800 text-cocoa-900 dark:text-cream-100 placeholder:text-stone-400 focus:border-primary focus:ring-primary" id="plaqueText" maxlength="35" placeholder="e.g., Joyeux Anniversaire Sophie" type="text"/>
+                <span class="text-[11px] text-cocoa-600 dark:text-cream-200 mt-1 block">Inscribed in pure 24K edible gold dust on dark cocoa disc.</span>
+              </div>
+              <div>
+                <label class="block text-xs font-cinzel uppercase tracking-widest text-primary font-bold mb-2" for="deliveryDate">
+                  3. Delivery / Dispatch Date
+                </label>
+                <select class="w-full text-sm rounded border-[#DCCEC0] dark:border-cocoa-700 bg-white dark:bg-cocoa-800 text-cocoa-900 dark:text-cream-100 focus:border-primary focus:ring-primary" id="deliveryDate">
+                  <option value="today">Today (Courier dispatch within 3 hours - Paris Only)</option>
+                  <option selected="" value="tomorrow">Tomorrow Morning (9:00 AM - 12:00 PM)</option>
+                  <option value="custom">Select Specific Calendar Date at Checkout</option>
+                </select>
+                <span class="text-[11px] text-cocoa-600 dark:text-cream-200 mt-1 block">Temperature-controlled isotherm box included.</span>
+              </div>
+            </div>
+            <div class="pt-6 border-t border-[#EAE0D1] dark:border-cocoa-800 bg-[#F4EDE2] dark:bg-cocoa-800/60 -mx-6 -mb-6 p-6 sm:p-8 rounded-b-3xl">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                  <span class="text-xs text-cocoa-600 dark:text-cream-200 uppercase tracking-wider block">Selected Batch</span>
+                  <span class="text-sm font-bold text-cocoa-900 dark:text-cream-50 block" id="selectedItemLabel">8-inch Grand Feast Cake (8-10 slices)</span>
+                  <span class="text-xs text-primary font-medium">Complimentary silk ribbon packaging &amp; tasting pamphlet</span>
+                </div>
+                <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
+                  <div class="text-right">
+                    <span class="text-xs text-cocoa-600 dark:text-cream-200 block uppercase tracking-wider">Total</span>
+                    <span class="text-3xl font-serif-luxury font-bold text-cocoa-900 dark:text-cream-50" id="priceDisplay">$78.00</span>
+                  </div>
+                  <button class="bg-primary hover:bg-primary-dark text-white px-8 py-3.5 rounded font-bold uppercase tracking-wider text-xs shadow-lg hover:shadow-gold-glow transition-all" type="submit">
+                    Complete Reservation
+                  </button>
+                </div>
+              </div>
+              <div class="mt-6 pt-4 border-t border-black/5 dark:border-white/5 flex flex-wrap items-center justify-center gap-6 text-[11px] text-cocoa-700 dark:text-cream-200">
+                <span class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-primary">verified</span>
+                  Refrigerated Courier Transport (4°C)
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-primary">schedule</span>
+                  Baking Freshness Guarantee
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-xs text-primary">lock</span>
+                  Encrypted Luxury Checkout
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER FROM CODE.HTML -->
+  <footer class="bg-[#F0E6D8] dark:bg-cocoa-900 border-t border-[#E2D4C3] dark:border-cocoa-800 text-cocoa-700 dark:text-cream-200 pt-16 pb-12 transition-colors relative z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-[#E0D2C0] dark:border-cocoa-800">
+        <div class="space-y-4 md:col-span-1">
+          <span class="font-cinzel text-lg tracking-[0.25em] font-bold text-cocoa-900 dark:text-cream-50 block uppercase">Maison du Cacao</span>
+          <p class="text-xs leading-relaxed text-cocoa-600 dark:text-cream-200">
+            French Haute Chocolaterie &amp; Pâtisserie fondatrice. Dedicated to grand cru single-origin cacao creation since 1894.
+          </p>
+          <div class="text-xs text-primary font-medium">
+            Member of the Comité Colbert &amp; Relais Desserts
+          </div>
+        </div>
+        <div class="space-y-3">
+          <span class="text-xs font-cinzel font-bold uppercase tracking-widest text-cocoa-900 dark:text-cream-50 block">Flagship Atelier</span>
+          <p class="text-xs leading-relaxed">
+            18 Rue du Faubourg Saint-Honoré<br/>
+            75008 Paris, France
+          </p>
+          <p class="text-xs text-primary">Open Tuesday – Sunday: 9:00 - 19:30</p>
+        </div>
+        <div class="space-y-3">
+          <span class="text-xs font-cinzel font-bold uppercase tracking-widest text-cocoa-900 dark:text-cream-50 block">Cake Concierge</span>
+          <p class="text-xs">atelier@maisonducacao.com</p>
+          <p class="text-xs font-medium text-cocoa-900 dark:text-cream-50">+33 1 42 68 55 00</p>
+          <p class="text-xs text-cocoa-600 dark:text-cream-200">Courier Tracking &amp; Bespoke Reception Requests</p>
+        </div>
+        <div class="space-y-3">
+          <span class="text-xs font-cinzel font-bold uppercase tracking-widest text-cocoa-900 dark:text-cream-50 block">The Cacao Gazette</span>
+          <p class="text-xs text-cocoa-600 dark:text-cream-200">Receive private batch releases and seasonal tasting invitations.</p>
+          <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Bienvenue! You are subscribed to our private release gazette.');">
+            <input class="w-full text-xs rounded border-[#DCCEC0] dark:border-cocoa-700 bg-white dark:bg-cocoa-800 text-cocoa-900 dark:text-cream-100 placeholder:text-stone-400 focus:border-primary focus:ring-primary" placeholder="Your email address" required="" type="email"/>
+            <button class="bg-primary hover:bg-primary-dark text-white px-3.5 py-2 rounded text-xs font-semibold uppercase tracking-wider" type="submit">
+              Join
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-cocoa-600 dark:text-cream-200 gap-4">
+        <div>
+          © <span id="currentYear"></span> Maison du Cacao Paris. All rights reserved. Handcrafted in France.
+        </div>
+        <div class="flex gap-6">
+          <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+          <a class="hover:text-primary transition-colors" href="#">Cold Chain Guarantee</a>
+          <a class="hover:text-primary transition-colors" href="#">Privacy &amp; Traceability</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dynamic price calculation
+    window.updateSummary = function(price, label) {
+      const priceElem = document.getElementById('priceDisplay');
+      const labelElem = document.getElementById('selectedItemLabel');
+      if (priceElem) priceElem.textContent = '$' + price.toFixed(2);
+      if (labelElem) labelElem.textContent = label;
+    };
+    // Dynamic copyright year
+    const yearElem = document.getElementById('currentYear');
+    if (yearElem) yearElem.textContent = new Date().getFullYear();
+  </script>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
