@@ -8,6 +8,7 @@
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&am[...]
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="stylesheet" href="src/style.css"/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <script>
     tailwind.config = {
@@ -80,6 +81,107 @@
   </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-cocoa-800 dark:text-cream-100 font-sans antialiased transition-colors duration-500 overflow-x-clip selection:bg-primary selection:text[...]
+
+  <!-- TRANSPARENT LUXURY NAVIGATION BAR -->
+  <header id="main-navbar" class="fixed top-0 left-0 right-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="navbar-inner" class="flex items-center justify-between h-20 sm:h-24 transition-all duration-300">
+        
+        <!-- Logo / Brand Link -->
+        <a href="#scroll-animation-section" class="flex items-center gap-3 group text-cream-50 focus:outline-none" aria-label="Amma Cakes & Sweets Home">
+          <div class="w-10 h-10 rounded-full border border-primary/50 flex items-center justify-center font-cinzel text-base font-bold text-primary bg-black/50 backdrop-blur-md group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 shadow-[0_0_20px_rgba(197,138,69,0.3)]">
+            A
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="font-cinzel text-base sm:text-lg font-bold tracking-[0.2em] uppercase text-cream-50 group-hover:text-primary transition-colors leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              AMMA
+            </span>
+            <span class="font-cinzel text-[9px] sm:text-[10px] tracking-[0.3em] text-primary/95 uppercase font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+              Cakes &amp; Sweets
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Menus (Luxury Floating Glass Capsule) -->
+        <nav class="hidden lg:flex items-center gap-7 px-6 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.4)]" id="desktop-nav" aria-label="Main Navigation">
+          <a href="#scroll-animation-section" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="scroll-animation-section">
+            <span>Experience</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#about" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="about">
+            <span>The Craft</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#ingredients" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="ingredients">
+            <span>Ingredients</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#nutrition" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="nutrition">
+            <span>Nutrition</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#gallery" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="gallery">
+            <span>Gallery</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#reviews" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="reviews">
+            <span>Reviews</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+        </nav>
+
+        <!-- Right Side: CTA Button & Mobile Toggle -->
+        <div class="flex items-center gap-4">
+          <a href="#reserve" class="nav-cta hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-primary via-[#D4A373] to-primary hover:from-[#DFC29C] hover:to-primary text-cocoa-900 font-cinzel text-xs uppercase tracking-[0.16em] font-bold px-5 py-2.5 rounded-full shadow-[0_0_20px_rgba(197,138,69,0.35)] hover:shadow-[0_0_30px_rgba(197,138,69,0.6)] transition-all duration-300 transform hover:-translate-y-0.5">
+            <span>Reserve Cake</span>
+            <span class="material-symbols-outlined text-sm font-bold">arrow_outward</span>
+          </a>
+
+          <!-- Mobile Hamburger Toggle Button -->
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu" class="lg:hidden flex items-center justify-center w-10 h-10 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-cream-100 hover:text-primary hover:border-primary/50 transition-all focus:outline-none">
+            <span id="mobile-menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Collapsible Menu Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-primary/20 bg-[#120A07]/95 backdrop-blur-2xl px-6 py-6 space-y-4 shadow-2xl transition-all duration-300">
+      <nav class="flex flex-col space-y-1" aria-label="Mobile Navigation">
+        <a href="#scroll-animation-section" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="scroll-animation-section">
+          <span>Experience</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#about" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="about">
+          <span>The Craft</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#ingredients" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="ingredients">
+          <span>Ingredients</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#nutrition" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="nutrition">
+          <span>Nutrition</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#gallery" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="gallery">
+          <span>Gallery</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#reviews" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="reviews">
+          <span>Reviews</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+      </nav>
+      <div class="pt-2">
+        <a href="#reserve" class="mobile-nav-link flex items-center justify-center gap-2 w-full bg-gradient-to-r from-primary to-primary-dark text-white font-cinzel text-xs uppercase tracking-[0.2em] font-bold py-3.5 rounded-xl shadow-gold-glow">
+          <span>Reserve Cake</span>
+          <span class="material-symbols-outlined text-sm">arrow_outward</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
   <!-- SCROLL ANIMATION SECTION (WITH FADING TITLE OVERLAY) -->
   <section id="scroll-animation-section" class="scroll-animation-wrapper">

@@ -145,11 +145,162 @@ html, body {
   pointer-events: none;
 }
 
+/* Navigation Bar Styling */
+#main-navbar {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(8, 6, 5, 0.75) 0%, rgba(8, 6, 5, 0.25) 70%, rgba(8, 6, 5, 0) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+#main-navbar.navbar-scrolled {
+  background: rgba(18, 10, 7, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(197, 138, 69, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+}
 
+#main-navbar.navbar-scrolled #navbar-inner {
+  height: 4.5rem;
+}
+
+/* Nav links & Active states */
+.nav-link {
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-link.active {
+  color: #DFC29C;
+  text-shadow: 0 0 12px rgba(197, 138, 69, 0.4);
+}
+
+.nav-link.active .nav-indicator {
+  width: 100%;
+}
+
+.mobile-nav-link.active {
+  color: #DFC29C;
+  border-left: 2px solid #C58A45;
+  padding-left: 0.75rem;
+}
+
+/* Section scroll offsets so fixed navbar doesn't overlap section headings */
+#scroll-animation-section,
+#about,
+#ingredients,
+#nutrition,
+#gallery,
+#reviews,
+#reserve {
+  scroll-margin-top: 5.5rem;
+}
   </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-cocoa-800 dark:text-cream-100 font-sans antialiased transition-colors duration-500 overflow-x-clip selection:bg-primary selection:text-white">
+
+  <!-- TRANSPARENT LUXURY NAVIGATION BAR -->
+  <header id="main-navbar" class="fixed top-0 left-0 right-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="navbar-inner" class="flex items-center justify-between h-20 sm:h-24 transition-all duration-300">
+        
+        <!-- Logo / Brand Link -->
+        <a href="#scroll-animation-section" class="flex items-center gap-3 group text-cream-50 focus:outline-none" aria-label="Amma Cakes & Sweets Home">
+          <div class="w-10 h-10 rounded-full border border-primary/50 flex items-center justify-center font-cinzel text-base font-bold text-primary bg-black/50 backdrop-blur-md group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300 shadow-[0_0_20px_rgba(197,138,69,0.3)]">
+            A
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="font-cinzel text-base sm:text-lg font-bold tracking-[0.2em] uppercase text-cream-50 group-hover:text-primary transition-colors leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              AMMA
+            </span>
+            <span class="font-cinzel text-[9px] sm:text-[10px] tracking-[0.3em] text-primary/95 uppercase font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+              Cakes &amp; Sweets
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Menus (Luxury Floating Glass Capsule) -->
+        <nav class="hidden lg:flex items-center gap-7 px-6 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.4)]" id="desktop-nav" aria-label="Main Navigation">
+          <a href="#scroll-animation-section" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="scroll-animation-section">
+            <span>Experience</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#about" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="about">
+            <span>The Craft</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#ingredients" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="ingredients">
+            <span>Ingredients</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#nutrition" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="nutrition">
+            <span>Nutrition</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#gallery" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="gallery">
+            <span>Gallery</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+          <a href="#reviews" class="nav-link font-cinzel text-xs uppercase tracking-[0.2em] font-medium text-cream-100/90 hover:text-primary py-1.5 transition-colors" data-target="reviews">
+            <span>Reviews</span>
+            <span class="nav-indicator absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300"></span>
+          </a>
+        </nav>
+
+        <!-- Right Side: CTA Button & Mobile Toggle -->
+        <div class="flex items-center gap-4">
+          <a href="#reserve" class="nav-cta hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-primary via-[#D4A373] to-primary hover:from-[#DFC29C] hover:to-primary text-cocoa-900 font-cinzel text-xs uppercase tracking-[0.16em] font-bold px-5 py-2.5 rounded-full shadow-[0_0_20px_rgba(197,138,69,0.35)] hover:shadow-[0_0_30px_rgba(197,138,69,0.6)] transition-all duration-300 transform hover:-translate-y-0.5">
+            <span>Reserve Cake</span>
+            <span class="material-symbols-outlined text-sm font-bold">arrow_outward</span>
+          </a>
+
+          <!-- Mobile Hamburger Toggle Button -->
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu" class="lg:hidden flex items-center justify-center w-10 h-10 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-cream-100 hover:text-primary hover:border-primary/50 transition-all focus:outline-none">
+            <span id="mobile-menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Collapsible Menu Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-primary/20 bg-[#120A07]/95 backdrop-blur-2xl px-6 py-6 space-y-4 shadow-2xl transition-all duration-300">
+      <nav class="flex flex-col space-y-1" aria-label="Mobile Navigation">
+        <a href="#scroll-animation-section" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="scroll-animation-section">
+          <span>Experience</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#about" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="about">
+          <span>The Craft</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#ingredients" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="ingredients">
+          <span>Ingredients</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#nutrition" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="nutrition">
+          <span>Nutrition</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#gallery" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="gallery">
+          <span>Gallery</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+        <a href="#reviews" class="mobile-nav-link flex items-center justify-between py-3 font-cinzel text-sm uppercase tracking-[0.2em] text-cream-100 hover:text-primary border-b border-white/5 transition-colors" data-target="reviews">
+          <span>Reviews</span>
+          <span class="material-symbols-outlined text-sm text-primary/60">chevron_right</span>
+        </a>
+      </nav>
+      <div class="pt-2">
+        <a href="#reserve" class="mobile-nav-link flex items-center justify-center gap-2 w-full bg-gradient-to-r from-primary to-primary-dark text-white font-cinzel text-xs uppercase tracking-[0.2em] font-bold py-3.5 rounded-xl shadow-gold-glow">
+          <span>Reserve Cake</span>
+          <span class="material-symbols-outlined text-sm">arrow_outward</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
   <!-- SCROLL ANIMATION SECTION (WITH FADING TITLE OVERLAY) -->
   <section id="scroll-animation-section" class="scroll-animation-wrapper">
@@ -748,7 +899,16 @@ if ('serviceWorker' in navigator) {
 
 // Configuration
 const TOTAL_FRAMES = 240;
-const FRAME_PATH = (index) => `/frames/ezgif-frame-${String(index).padStart(3, '0')}.jpg`;
+
+// Determine frame path dynamically:
+// Frames in the repository reside in 'public/frames/'.
+// If running from a bundled dist where public/ is flattened, it automatically falls back to 'frames/'.
+let currentBase = 'public/frames';
+
+const getFramePath = (index, baseDir = currentBase) => {
+  const filename = `ezgif-frame-${String(index).padStart(3, '0')}.jpg`;
+  return `${baseDir}/${filename}`;
+};
 
 // State
 const images = new Array(TOTAL_FRAMES + 1);
@@ -832,10 +992,19 @@ function init() {
 
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = FRAME_PATH(i);
+      img.src = getFramePath(i, currentBase);
       img.onload = () => {
-        if (i === 1 && lastDrawnFrame === -1) {
-          drawFrame(1);
+        if (lastDrawnFrame === -1 || Math.round(currentFrame) === i) {
+          drawFrame(Math.round(currentFrame));
+        }
+      };
+      img.onerror = () => {
+        // Automatic fallback between 'public/frames' and 'frames'
+        if (!img.dataset.retried) {
+          img.dataset.retried = 'true';
+          const alternateBase = currentBase === 'frames' ? 'public/frames' : 'frames';
+          currentBase = alternateBase;
+          img.src = getFramePath(i, alternateBase);
         }
       };
       images[i] = img;
@@ -880,6 +1049,124 @@ function init() {
   preloadFrames();
   onScroll();
   requestAnimationFrame(renderLoop);
+
+  // Initialize Navigation Bar
+  initNavbar();
+}
+
+// Navigation Bar Controller
+function initNavbar() {
+  const navbar = document.getElementById('main-navbar');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileIcon = document.getElementById('mobile-menu-icon');
+  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+
+  if (!navbar) return;
+
+  // Toggle navbar background transparency on scroll
+  function updateNavbarTransparency() {
+    if (window.scrollY > 30) {
+      navbar.classList.add('navbar-scrolled');
+    } else {
+      navbar.classList.remove('navbar-scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', updateNavbarTransparency, { passive: true });
+  updateNavbarTransparency();
+
+  // Mobile menu toggle
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+      mobileBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('hidden');
+      if (mobileIcon) {
+        mobileIcon.textContent = !isExpanded ? 'close' : 'menu';
+      }
+    });
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.classList.contains('hidden') && !navbar.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+        if (mobileIcon) mobileIcon.textContent = 'menu';
+      }
+    });
+  }
+
+  // Smooth scroll handler for all internal anchor links in navbar
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+
+      const targetElem = document.querySelector(targetId);
+      if (targetElem) {
+        e.preventDefault();
+
+        // Close mobile menu if open
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false');
+          if (mobileIcon) mobileIcon.textContent = 'menu';
+        }
+
+        // Calculate offset position accounting for navbar
+        const navbarHeight = navbar.offsetHeight || 80;
+        const targetTop = targetElem.getBoundingClientRect().top + window.pageYOffset - navbarHeight + 10;
+
+        window.scrollTo({
+          top: targetId === '#scroll-animation-section' ? 0 : Math.max(0, targetTop),
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Active section indicator
+  const sections = [
+    'scroll-animation-section',
+    'about',
+    'ingredients',
+    'nutrition',
+    'gallery',
+    'reviews',
+    'reserve'
+  ].map((id) => document.getElementById(id)).filter(Boolean);
+
+  function setActiveLink(activeId) {
+    navLinks.forEach((link) => {
+      const target = link.getAttribute('data-target') || (link.getAttribute('href') || '').replace('#', '');
+      if (target === activeId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // High-precision scroll watcher for active menu highlighting
+  function updateActiveSection() {
+    const scrollPosition = window.scrollY + 140;
+    let currentActive = 'scroll-animation-section';
+
+    for (const section of sections) {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if (scrollPosition >= top && scrollPosition < top + height) {
+        currentActive = section.id;
+        break;
+      }
+    }
+    setActiveLink(currentActive);
+  }
+
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  updateActiveSection();
 }
 
 if (document.readyState === 'loading') {

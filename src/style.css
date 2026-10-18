@@ -64,4 +64,63 @@ html, body {
   pointer-events: none;
 }
 
+/* Navigation Bar Styling */
+#main-navbar {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(8, 6, 5, 0.75) 0%, rgba(8, 6, 5, 0.25) 70%, rgba(8, 6, 5, 0) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#main-navbar.navbar-scrolled {
+  background: rgba(18, 10, 7, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(197, 138, 69, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+}
+
+#main-navbar.navbar-scrolled #navbar-inner {
+  height: 4.5rem;
+}
+
+/* Nav links & Active states */
+.nav-link {
+  position: relative;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.nav-link:hover {
+  text-shadow: 0 0 12px rgba(197, 138, 69, 0.6);
+}
+
+.nav-link.active {
+  color: #DFC29C;
+  text-shadow: 0 0 12px rgba(197, 138, 69, 0.5);
+}
+
+.nav-link.active .nav-indicator {
+  width: 100%;
+}
+
+.mobile-nav-link.active {
+  color: #DFC29C;
+  border-left: 2px solid #C58A45;
+  padding-left: 0.75rem;
+}
+
+/* Section scroll offsets so fixed navbar doesn't overlap section headings */
+#scroll-animation-section,
+#about,
+#ingredients,
+#nutrition,
+#gallery,
+#reviews,
+#reserve {
+  scroll-margin-top: 5.5rem;
+}
+
+
 

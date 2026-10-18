@@ -1,5 +1,3 @@
-import './style.css';
-
 // Unregister any stray service workers from other projects
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -11,10 +9,14 @@ if ('serviceWorker' in navigator) {
 
 // Configuration
 const TOTAL_FRAMES = 240;
-const isRepoPagesSite = /\/[^/]+\/.test(window.location.pathname) && window.location.hostname.includes('github.io');
-const FRAME_PATH = (index) => {
+// Determine frame path dynamically:
+// Frames in the repository reside in 'public/frames/'.
+// If running from a bundled dist where public/ is flattened, it automatically falls back to 'frames/'.
+let currentBase = 'public/frames';
+
+const getFramePath = (index, baseDir = currentBase) => {
   const filename = `ezgif-frame-${String(index).padStart(3, '0')}.jpg`;
-  return isRepoPagesSite ? `public/frames/${filename}` : `frames/${filename}`;
+  return `${baseDir}/${filename}`;
 };
 
 // State
@@ -99,10 +101,19 @@ function init() {
 
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = FRAME_PATH(i);
+      img.src = getFramePath(i, currentBase);
       img.onload = () => {
-        if (i === 1 && lastDrawnFrame === -1) {
-          drawFrame(1);
+        if (lastDrawnFrame === -1 || Math.round(currentFrame) === i) {
+          drawFrame(Math.round(currentFrame));
+        }
+      };
+      img.onerror = () => {
+        // Automatic fallback between 'public/frames' and 'frames'
+        if (!img.dataset.retried) {
+          img.dataset.retried = 'true';
+          const alternateBase = currentBase === 'frames' ? 'public/frames' : 'frames';
+          currentBase = alternateBase;
+          img.src = getFramePath(i, alternateBase);
         }
       };
       images[i] = img;
@@ -147,6 +158,124 @@ function init() {
   preloadFrames();
   onScroll();
   requestAnimationFrame(renderLoop);
+
+  // Initialize Navigation Bar
+  initNavbar();
+}
+
+// Navigation Bar Controller
+function initNavbar() {
+  const navbar = document.getElementById('main-navbar');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileIcon = document.getElementById('mobile-menu-icon');
+  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+
+  if (!navbar) return;
+
+  // Toggle navbar background transparency on scroll
+  function updateNavbarTransparency() {
+    if (window.scrollY > 30) {
+      navbar.classList.add('navbar-scrolled');
+    } else {
+      navbar.classList.remove('navbar-scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', updateNavbarTransparency, { passive: true });
+  updateNavbarTransparency();
+
+  // Mobile menu toggle
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+      mobileBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('hidden');
+      if (mobileIcon) {
+        mobileIcon.textContent = !isExpanded ? 'close' : 'menu';
+      }
+    });
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.classList.contains('hidden') && !navbar.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+        if (mobileIcon) mobileIcon.textContent = 'menu';
+      }
+    });
+  }
+
+  // Smooth scroll handler for all internal anchor links in navbar
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+
+      const targetElem = document.querySelector(targetId);
+      if (targetElem) {
+        e.preventDefault();
+
+        // Close mobile menu if open
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false');
+          if (mobileIcon) mobileIcon.textContent = 'menu';
+        }
+
+        // Calculate offset position accounting for navbar
+        const navbarHeight = navbar.offsetHeight || 80;
+        const targetTop = targetElem.getBoundingClientRect().top + window.pageYOffset - navbarHeight + 10;
+
+        window.scrollTo({
+          top: targetId === '#scroll-animation-section' ? 0 : Math.max(0, targetTop),
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Active section indicator
+  const sections = [
+    'scroll-animation-section',
+    'about',
+    'ingredients',
+    'nutrition',
+    'gallery',
+    'reviews',
+    'reserve'
+  ].map((id) => document.getElementById(id)).filter(Boolean);
+
+  function setActiveLink(activeId) {
+    navLinks.forEach((link) => {
+      const target = link.getAttribute('data-target') || (link.getAttribute('href') || '').replace('#', '');
+      if (target === activeId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // High-precision scroll watcher for active menu highlighting
+  function updateActiveSection() {
+    const scrollPosition = window.scrollY + 140;
+    let currentActive = 'scroll-animation-section';
+
+    for (const section of sections) {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if (scrollPosition >= top && scrollPosition < top + height) {
+        currentActive = section.id;
+        break;
+      }
+    }
+    setActiveLink(currentActive);
+  }
+
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  updateActiveSection();
 }
 
 if (document.readyState === 'loading') {
@@ -154,3 +283,4 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
