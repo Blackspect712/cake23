@@ -11,7 +11,11 @@ if ('serviceWorker' in navigator) {
 
 // Configuration
 const TOTAL_FRAMES = 240;
-const FRAME_PATH = (index) => `/frames/ezgif-frame-${String(index).padStart(3, '0')}.jpg`;
+const isRepoPagesSite = /\/[^/]+\/.test(window.location.pathname) && window.location.hostname.includes('github.io');
+const FRAME_PATH = (index) => {
+  const filename = `ezgif-frame-${String(index).padStart(3, '0')}.jpg`;
+  return isRepoPagesSite ? `public/frames/${filename}` : `frames/${filename}`;
+};
 
 // State
 const images = new Array(TOTAL_FRAMES + 1);
