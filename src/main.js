@@ -75,7 +75,7 @@ function init() {
 
     let drawW, drawH, offsetX, offsetY;
 
-    // Cover aspect ratio with centering
+    // Cover aspect ratio with centered cropping
     if (viewportRatio > imgRatio) {
       drawW = canvasW;
       drawH = canvasW / imgRatio;
@@ -144,6 +144,38 @@ function init() {
       heroOverlay.style.transform = `translateY(${-fadeProgress * 40}px)`;
       heroOverlay.style.visibility = opacity <= 0.005 ? 'hidden' : 'visible';
     }
+
+    // Fade out mobile scroll cue early (at 6% progress)
+    const scrollCue = document.getElementById('mobile-scroll-cue');
+    if (scrollCue) {
+      const cueFade = Math.min(Math.max(progress / 0.06, 0), 1);
+      const cueOpacity = 1 - cueFade;
+      scrollCue.style.opacity = cueOpacity.toFixed(3);
+      scrollCue.style.visibility = cueOpacity <= 0.01 ? 'hidden' : 'visible';
+    }
+
+    // Toggle Floating Mobile Bottom Action Bar
+    const bottomBar = document.getElementById('mobile-bottom-bar');
+    const reserveSection = document.getElementById('reserve');
+    if (bottomBar) {
+      const scrollY = window.scrollY;
+      const isPastHero = scrollY > 350;
+      let isInReserveSection = false;
+
+      if (reserveSection) {
+        const reserveRect = reserveSection.getBoundingClientRect();
+        // If the top of reserve section is visible in the viewport or past it
+        if (reserveRect.top < window.innerHeight - 80) {
+          isInReserveSection = true;
+        }
+      }
+
+      if (isPastHero && !isInReserveSection) {
+        bottomBar.classList.remove('bar-hidden');
+      } else {
+        bottomBar.classList.add('bar-hidden');
+      }
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -175,7 +207,7 @@ function initNavbar() {
 
   // Toggle navbar background transparency on scroll
   function updateNavbarTransparency() {
-    if (window.scrollY > 30) {
+    if (window.scrollY > 25) {
       navbar.classList.add('navbar-scrolled');
     } else {
       navbar.classList.remove('navbar-scrolled');
@@ -190,10 +222,11 @@ function initNavbar() {
     mobileBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
-      mobileBtn.setAttribute('aria-expanded', !isExpanded);
-      mobileMenu.classList.toggle('hidden');
+      const willExpand = !isExpanded;
+      mobileBtn.setAttribute('aria-expanded', willExpand);
+      mobileMenu.classList.toggle('hidden', !willExpand);
       if (mobileIcon) {
-        mobileIcon.textContent = !isExpanded ? 'close' : 'menu';
+        mobileIcon.textContent = willExpand ? 'close' : 'menu';
       }
     });
 
@@ -207,7 +240,7 @@ function initNavbar() {
     });
   }
 
-  // Smooth scroll handler for all internal anchor links in navbar
+  // Smooth scroll handler for all internal anchor links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -225,8 +258,8 @@ function initNavbar() {
         }
 
         // Calculate offset position accounting for navbar
-        const navbarHeight = navbar.offsetHeight || 80;
-        const targetTop = targetElem.getBoundingClientRect().top + window.pageYOffset - navbarHeight + 10;
+        const navbarHeight = navbar.offsetHeight || 70;
+        const targetTop = targetElem.getBoundingClientRect().top + window.pageYOffset - navbarHeight + 8;
 
         window.scrollTo({
           top: targetId === '#scroll-animation-section' ? 0 : Math.max(0, targetTop),
@@ -278,9 +311,20 @@ function initNavbar() {
   updateActiveSection();
 }
 
+// Global updateSummary for price calculation & syncing mobile bottom bar
+window.updateSummary = function(price, label) {
+  const priceElem = document.getElementById('priceDisplay');
+  const labelElem = document.getElementById('selectedItemLabel');
+  const mobilePriceElem = document.getElementById('mobilePriceDisplay');
+
+  const formatted = '$' + price.toFixed(2);
+  if (priceElem) priceElem.textContent = formatted;
+  if (labelElem) labelElem.textContent = label;
+  if (mobilePriceElem) mobilePriceElem.textContent = formatted;
+};
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
   init();
 }
-
