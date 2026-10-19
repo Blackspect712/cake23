@@ -215,18 +215,21 @@
   <!-- SCROLL ANIMATION SECTION (CINEMATIC 3D CAKE ASSEMBLY) -->
   <section id="scroll-animation-section" class="scroll-animation-wrapper">
     <div class="sticky-canvas-container">
-      <canvas id="cake-canvas"></canvas>
+      <!-- Framed Canvas Wrapper (85-90% Mobile Frame, Full-bleed on Desktop) -->
+      <div id="cake-frame-wrapper" class="cake-frame-wrapper">
+        <canvas id="cake-canvas"></canvas>
+      </div>
 
       <!-- Fading Hero Title Overlay (Fades out at 30% scroll progress) -->
-      <div id="hero-title-overlay" class="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-4 pointer-events-none transition-all duration-100 ease-out">
-        <div class="max-w-4xl mx-auto space-y-3 sm:space-y-4">
+      <div id="hero-title-overlay" class="hero-title-overlay pointer-events-none transition-all duration-100 ease-out">
+        <div class="max-w-4xl mx-auto space-y-2.5 sm:space-y-4">
           <!-- Luxury Subtitle Badge -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-primary/30 text-primary text-[10px] sm:text-xs font-cinzel uppercase tracking-[0.25em]">
+          <div class="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-primary/30 text-primary text-[10px] sm:text-xs font-cinzel uppercase tracking-[0.25em]">
             <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
             <span>Artisan Triple Ganache</span>
           </div>
 
-          <h1 class="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[0.16em] sm:tracking-[0.22em] uppercase text-cream-50 drop-shadow-[0_6px_30px_rgba(0,0,0,0.95)] leading-tight">
+          <h1 class="font-cinzel text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[0.16em] sm:tracking-[0.22em] uppercase text-cream-50 drop-shadow-[0_6px_30px_rgba(0,0,0,0.95)] leading-tight">
             AMMA CAKES AND SWEETS
           </h1>
 

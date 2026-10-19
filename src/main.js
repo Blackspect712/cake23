@@ -33,8 +33,10 @@ function init() {
 
   function resizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    // Measure actual rendered size of the canvas element inside its container
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width || window.innerWidth;
+    const h = rect.height || window.innerHeight;
 
     canvas.width = Math.floor(w * dpr);
     canvas.height = Math.floor(h * dpr);
@@ -71,12 +73,17 @@ function init() {
     const imgRatio = imgWidth / imgHeight;
     const canvasW = canvas.width;
     const canvasH = canvas.height;
-    const viewportRatio = canvasW / canvasH;
+    const canvasRatio = canvasW / canvasH;
 
     let drawW, drawH, offsetX, offsetY;
 
-    // Cover aspect ratio with centered cropping
-    if (viewportRatio > imgRatio) {
+    // If canvas aspect ratio matches the 16:9 frame aspect ratio (within 5% margin)
+    if (Math.abs(canvasRatio - imgRatio) < 0.05) {
+      drawW = canvasW;
+      drawH = canvasH;
+      offsetX = 0;
+      offsetY = 0;
+    } else if (canvasRatio > imgRatio) {
       drawW = canvasW;
       drawH = canvasW / imgRatio;
       offsetX = 0;
