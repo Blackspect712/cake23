@@ -75,29 +75,49 @@ function init() {
     const canvasH = canvas.height;
     const canvasRatio = canvasW / canvasH;
 
+    const isMobile = window.innerWidth < 768;
     let drawW, drawH, offsetX, offsetY;
 
-    // If canvas aspect ratio matches the 16:9 frame aspect ratio (within 5% margin)
-    if (Math.abs(canvasRatio - imgRatio) < 0.05) {
-      drawW = canvasW;
-      drawH = canvasH;
-      offsetX = 0;
-      offsetY = 0;
-    } else if (canvasRatio > imgRatio) {
-      drawW = canvasW;
-      drawH = canvasW / imgRatio;
-      offsetX = 0;
-      offsetY = (canvasH - drawH) / 2;
-    } else {
-      drawH = canvasH;
-      drawW = canvasH * imgRatio;
-      offsetX = (canvasW - drawW) / 2;
-      offsetY = 0;
-    }
+    if (isMobile) {
+      // Mobile Layout:
+      // Fill canvas buffer with matching warm cream
+      ctx.fillStyle = '#E2D5C5';
+      ctx.fillRect(0, 0, canvasW, canvasH);
 
-    ctx.fillStyle = '#080605';
-    ctx.fillRect(0, 0, canvasW, canvasH);
-    ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+      // Scale cake up by ~1.30x so the plate is large, prominent, and 100% visible
+      // (The plate spans 1292px of 1920px = 67.3%. At 1.30x, rendered plate is 87% of card width)
+      const scale = (canvasW / imgWidth) * 1.30;
+      const cleanH = imgHeight - 8;
+      drawW = imgWidth * scale;
+      drawH = cleanH * scale;
+      offsetX = (canvasW - drawW) / 2;
+      offsetY = (canvasH - drawH) / 2;
+
+      // Clip 4px black artifact lines from top & bottom of source video frames for flawless blending
+      ctx.drawImage(img, 0, 4, imgWidth, cleanH, offsetX, offsetY, drawW, drawH);
+    } else {
+      // Desktop Layout (full-bleed cinematic cover)
+      if (Math.abs(canvasRatio - imgRatio) < 0.05) {
+        drawW = canvasW;
+        drawH = canvasH;
+        offsetX = 0;
+        offsetY = 0;
+      } else if (canvasRatio > imgRatio) {
+        drawW = canvasW;
+        drawH = canvasW / imgRatio;
+        offsetX = 0;
+        offsetY = (canvasH - drawH) / 2;
+      } else {
+        drawH = canvasH;
+        drawW = canvasH * imgRatio;
+        offsetX = (canvasW - drawW) / 2;
+        offsetY = 0;
+      }
+
+      ctx.fillStyle = '#080605';
+      ctx.fillRect(0, 0, canvasW, canvasH);
+      ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+    }
 
     lastDrawnFrame = frameIndex;
   }

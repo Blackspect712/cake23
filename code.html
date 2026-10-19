@@ -71,12 +71,15 @@ html, body {
   position: relative;
   width: 100%;
   height: 300vh;
-  background-color: #080605;
+  background-color: #E2D5C5;
+  background: radial-gradient(circle at 50% 45%, #EFE5D8 0%, #E2D5C5 65%, #D4C4B1 100%);
 }
 
 @media (min-width: 768px) {
   .scroll-animation-wrapper {
     height: 400vh;
+    background-color: #080605;
+    background: #080605;
   }
 }
 
@@ -93,29 +96,31 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #080605;
+  background-color: #E2D5C5;
+  background: radial-gradient(circle at 50% 45%, #EFE5D8 0%, #E2D5C5 65%, #D4C4B1 100%);
   z-index: 20;
 }
 
 /* Mobile Frame Wrapper:
-   On mobile (<768px), fits 85-90% of the mobile layout in its correct 16:9 frame,
+   On mobile (<768px), generous 55dvh luxury framed card matching animation cream color,
    with rounded corners, luxury gold border, and ambient shadow.
    On desktop (>=768px), expands to full viewport cover. */
 .cake-frame-wrapper {
   position: relative;
-  width: 90%;
-  max-width: 90vw;
-  max-height: 85dvh;
-  aspect-ratio: 16 / 9;
-  border-radius: 1.25rem;
+  width: 92%;
+  max-width: 92vw;
+  height: 56dvh;
+  max-height: 58dvh;
+  min-height: 370px;
+  border-radius: 1.5rem;
   overflow: hidden;
-  border: 1px solid rgba(197, 138, 69, 0.45);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(197, 138, 69, 0.25);
+  border: 1.5px solid rgba(197, 138, 69, 0.55);
+  box-shadow: 0 16px 45px -10px rgba(110, 75, 45, 0.25), 0 0 30px rgba(197, 138, 69, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #080605;
-  margin-top: 1.5rem;
+  background-color: #E2D5C5;
+  margin-top: 4rem;
   z-index: 25;
 }
 
@@ -129,7 +134,7 @@ html, body {
 /* Hero Title Overlay */
 .hero-title-overlay {
   position: absolute;
-  top: 4.75rem;
+  top: 4.25rem;
   left: 0;
   right: 0;
   z-index: 30;
@@ -141,8 +146,29 @@ html, body {
   will-change: opacity, transform;
 }
 
+@media (max-width: 767px) {
+  .hero-title-overlay {
+    top: 5rem;
+  }
+  .hero-title-overlay h1 {
+    font-size: 1.65rem !important;
+    line-height: 1.2 !important;
+    color: #1a0f0a !important;
+    text-shadow: 0 2px 12px rgba(255, 255, 255, 0.7) !important;
+  }
+  .hero-title-overlay p {
+    color: #4a3427 !important;
+    text-shadow: 0 1px 8px rgba(255, 255, 255, 0.6) !important;
+  }
+  .cake-frame-wrapper {
+    margin-top: 5.5rem;
+  }
+}
+
 @media (min-width: 768px) {
   .sticky-canvas-container {
+    background-color: #080605;
+    background: #080605;
     flex-direction: row;
   }
 
@@ -150,11 +176,12 @@ html, body {
     width: 100%;
     max-width: none;
     max-height: none;
-    aspect-ratio: auto;
     height: 100%;
+    min-height: 0;
     border-radius: 0;
     border: none;
     box-shadow: none;
+    background-color: transparent;
     margin-top: 0;
   }
 
@@ -1233,29 +1260,49 @@ function init() {
     const canvasH = canvas.height;
     const canvasRatio = canvasW / canvasH;
 
+    const isMobile = window.innerWidth < 768;
     let drawW, drawH, offsetX, offsetY;
 
-    // If canvas aspect ratio matches the 16:9 frame aspect ratio (within 5% margin)
-    if (Math.abs(canvasRatio - imgRatio) < 0.05) {
-      drawW = canvasW;
-      drawH = canvasH;
-      offsetX = 0;
-      offsetY = 0;
-    } else if (canvasRatio > imgRatio) {
-      drawW = canvasW;
-      drawH = canvasW / imgRatio;
-      offsetX = 0;
-      offsetY = (canvasH - drawH) / 2;
-    } else {
-      drawH = canvasH;
-      drawW = canvasH * imgRatio;
-      offsetX = (canvasW - drawW) / 2;
-      offsetY = 0;
-    }
+    if (isMobile) {
+      // Mobile Layout:
+      // Fill canvas buffer with matching warm cream
+      ctx.fillStyle = '#E2D5C5';
+      ctx.fillRect(0, 0, canvasW, canvasH);
 
-    ctx.fillStyle = '#080605';
-    ctx.fillRect(0, 0, canvasW, canvasH);
-    ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+      // Scale cake up by ~1.30x so the plate is large, prominent, and 100% visible
+      // (The plate spans 1292px of 1920px = 67.3%. At 1.30x, rendered plate is 87% of card width)
+      const scale = (canvasW / imgWidth) * 1.30;
+      const cleanH = imgHeight - 8;
+      drawW = imgWidth * scale;
+      drawH = cleanH * scale;
+      offsetX = (canvasW - drawW) / 2;
+      offsetY = (canvasH - drawH) / 2;
+
+      // Clip 4px black artifact lines from top & bottom of source video frames for flawless blending
+      ctx.drawImage(img, 0, 4, imgWidth, cleanH, offsetX, offsetY, drawW, drawH);
+    } else {
+      // Desktop Layout (full-bleed cinematic cover)
+      if (Math.abs(canvasRatio - imgRatio) < 0.05) {
+        drawW = canvasW;
+        drawH = canvasH;
+        offsetX = 0;
+        offsetY = 0;
+      } else if (canvasRatio > imgRatio) {
+        drawW = canvasW;
+        drawH = canvasW / imgRatio;
+        offsetX = 0;
+        offsetY = (canvasH - drawH) / 2;
+      } else {
+        drawH = canvasH;
+        drawW = canvasH * imgRatio;
+        offsetX = (canvasW - drawW) / 2;
+        offsetY = 0;
+      }
+
+      ctx.fillStyle = '#080605';
+      ctx.fillRect(0, 0, canvasW, canvasH);
+      ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+    }
 
     lastDrawnFrame = frameIndex;
   }
